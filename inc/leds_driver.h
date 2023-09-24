@@ -25,6 +25,12 @@ void leds_init(uint16_t *port);
  */
 void leds_turn_on(unsigned int led_id);
 
+/**
+ * @brief Apagado de LED unico
+ * @param led_id Numero logico de LED
+ */
+void leds_turn_off(unsigned int led_id);
+
 #ifdef __cplusplus
 }
 #endif

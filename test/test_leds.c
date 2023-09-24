@@ -22,6 +22,16 @@
 
 #include "leds_driver.h"
 
+uint16_t virtual_port; /*!> Puerto virtual para tests unitarios */
+
+/**
+ * @brief Fixture de inicializacion del driver de LEDs
+ */
+void setUp(void) {
+    // inicializacion del driver
+    leds_init(&virtual_port);
+}
+
 /**
  * @brief Todos los LEDs deben estar apagados al inicializar el driver
  */
@@ -40,13 +50,24 @@ void test_leds_init(void) {
 void test_one_led_on(void) {
     // LED a encender
     unsigned int led_test = 5;
-    // inicializacion del driver
-    uint16_t virtual_port;
-    leds_init(&virtual_port);
     // encendido de led
     leds_turn_on(led_test);
     // chequeo de LEDs apagados excepto el LED encendido
-    uint16_t mask = 0;
-    mask = (1 << (led_test - 1));
-    TEST_ASSERT_BITS_HIGH(mask, &virtual_port);
+    uint16_t mask = (1 << (led_test - 1));
+    TEST_ASSERT_BITS_HIGH(mask, virtual_port);
+}
+
+/**
+ * @brief Apagado de un LED particular
+ */
+void test_one_led_off(void) {
+    // LED a encender
+    unsigned int led_test = 5;
+    // encendido de led
+    leds_turn_on(led_test);
+    // apagado de led
+    leds_turn_off(led_test);
+    // chequeo de LEDs apagados
+    uint16_t mask = ~(1 << (led_test - 1));
+    TEST_ASSERT_BITS_LOW(mask, virtual_port);
 }

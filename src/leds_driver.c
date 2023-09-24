@@ -18,3 +18,7 @@ void leds_init(uint16_t *port) {
 void leds_turn_on(unsigned int led_id) {
     *reg_port |= (1 << 4);
 }
+
+void leds_turn_off(unsigned int led_id) {
+    *reg_port &= ~(1 << 4);
+}
