@@ -19,6 +19,12 @@ extern "C" {
  */
 void leds_init(uint16_t *port);
 
+/**
+ * @brief Encendido de LED unico
+ * @param led_id Numero logico de LED
+ */
+void leds_turn_on(unsigned int led_id);
+
 #ifdef __cplusplus
 }
 #endif

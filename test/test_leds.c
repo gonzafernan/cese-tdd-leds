@@ -2,7 +2,7 @@
  * @file test_leds.c
  * @author Gonzalo Fernandez
  *
- * @todo Al iniciar el driver todos los LEDs deben estar apagados
+ * Al iniciar el driver todos los LEDs deben estar apagados
  * @todo Con todos los LEDs apagados prendo un LED en particular.
  * @todo Apago un LED prendido
  * @todo Prendo y apago un LED con algunos prendido y otros apagados.
@@ -12,6 +12,8 @@
  * @todo Con todos los LED prendidos apago todos
  * @todo Probar LED 1 y LED 16.
  * @todo Probar fuera de los límiter
+ * @todo Probar que ocurre cuando el puerto es NULL
+ * @todo Probar que ocurre cuando se utiliza una funcion del driver si un previo init
  */
 
 #include <stdint.h>
@@ -24,7 +26,27 @@
  * @brief Todos los LEDs deben estar apagados al inicializar el driver
  */
 void test_leds_init(void) {
+    // simulacion de puerto no inicializado
     uint16_t virtual_port = 0xFFFF;
+    // inicializacion del driver
     leds_init(&virtual_port);
-    TEST_ASSERT_EQUAL(0, virtual_port);
+    // chequeo de LEDs apagados
+    TEST_ASSERT_EQUAL(0x0000, virtual_port);
+}
+
+/**
+ * @brief Encendido de un LED particular
+ */
+void test_one_led_on(void) {
+    // LED a encender
+    unsigned int led_test = 5;
+    // inicializacion del driver
+    uint16_t virtual_port;
+    leds_init(&virtual_port);
+    // encendido de led
+    leds_turn_on(led_test);
+    // chequeo de LEDs apagados excepto el LED encendido
+    uint16_t mask = 0;
+    mask = (1 << (led_test - 1));
+    TEST_ASSERT_BITS_HIGH(mask, &virtual_port);
 }
