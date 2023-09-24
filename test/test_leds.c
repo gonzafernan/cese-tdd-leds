@@ -22,6 +22,8 @@
 
 #include "leds_driver.h"
 
+#define _BV(bit) (1 << bit)
+
 uint16_t virtual_port; /*!> Puerto virtual para tests unitarios */
 
 /**
@@ -53,8 +55,7 @@ void test_one_led_on(void) {
     // encendido de led
     leds_turn_on(led_test);
     // chequeo de LEDs apagados excepto el LED encendido
-    uint16_t mask = (1 << (led_test - 1));
-    TEST_ASSERT_BITS_HIGH(mask, virtual_port);
+    TEST_ASSERT_BITS_HIGH(_BV(4), virtual_port);
 }
 
 /**
@@ -68,6 +69,30 @@ void test_one_led_off(void) {
     // apagado de led
     leds_turn_off(led_test);
     // chequeo de LEDs apagados
-    uint16_t mask = ~(1 << (led_test - 1));
-    TEST_ASSERT_BITS_LOW(mask, virtual_port);
+    TEST_ASSERT_BITS_LOW(_BV(4), virtual_port);
+}
+
+/**
+ * @brief Encender multiples LEDs
+ */
+void test_multiple_led_on(void) {
+
+    leds_turn_on(5);
+    leds_turn_on(3);
+    leds_turn_on(3);
+    // LED 3 y 5 encendido
+    TEST_ASSERT_BITS_HIGH(_BV(4) | _BV(2), virtual_port);
+}
+
+/**
+ * @brief Apagar multiples LEDs
+ */
+void test_multiple_led_off(void) {
+
+    leds_turn_on(5);
+    leds_turn_on(3);
+    leds_turn_off(5);
+    leds_turn_off(2);
+    // LED 3 y 5 encendido
+    TEST_ASSERT_BITS_LOW(_BV(4) | _BV(1), virtual_port);
 }
