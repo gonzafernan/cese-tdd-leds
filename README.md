@@ -28,3 +28,17 @@ materia: Testing de Software en Sistemas Embebidos
 - Con todos los LED prendidos apago todos
 - Probar LED 1 y LED 16.
 - Probar fuera de los límiter
+
+## Setup de entorno de trabajo
+
+Para configurar pre-commit:
+
+```sh
+$ pre-commit install
+```
+
+Para ejecutar la suite de test unitarios:
+
+```sh
+$ ceedling
+```
