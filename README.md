@@ -17,17 +17,15 @@ materia: Testing de Software en Sistemas Embebidos
 - El reset de hardware no define un estado conocido de los LEDs, estos deben ser apagados por software.
 
 ## Tests unitarios
-
-- Al iniciar el driver todos los LEDs deben estar apagados.
-- Con todos los LEDs apagados prendo un LED en particular.
-- Apago un LED prendido
+- Con la inicializacion todos los LEDs quedan apagados
+- Prender un LED individual
+- Apagar un LED individual
 - Prendo y apago un LED con algunos prendido y otros apagados.
-- Consulto el estado de un LED prendido.
-- Consulto el estado de un LED apagado
-- Con todos los LEDs apagados prendo todos
-- Con todos los LED prendidos apago todos
-- Probar LED 1 y LED 16.
-- Probar fuera de los límiter
+- Prender todos los LEDs de una vez
+- Apagar todos los LEDs de una vez
+- Consulta el estado de un LED que esta encendido
+- Consulto el estado de un LED que esta apagado
+- Revisar limites de los parametros
 
 ## Setup de entorno de trabajo
 
